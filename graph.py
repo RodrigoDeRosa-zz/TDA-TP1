@@ -197,10 +197,10 @@ class Graph(object):
         puntos_articulacion = []
         vert_aux = self.crear_vertices_aux()
         vert_aux[vertice_comienzo][4]=True
-        self.obterner_punto_articulacion_rec(puntos_articulacion, vertice_comienzo, counter, vert_aux)
+        self.obtener_punto_articulacion_rec(puntos_articulacion, vertice_comienzo, counter, vert_aux)
         return puntos_articulacion
 
-    def obterner_punto_articulacion_rec(self, puntos_articulacion, v, counter, vert_aux):
+    def obtener_punto_articulacion_rec(self, puntos_articulacion, v, counter, vert_aux):
         counter += 1
         #seteamos visitado en true, low y num
         vert_aux[v][0] = True
@@ -213,7 +213,7 @@ class Graph(object):
             if( not vert_aux[w][0] ):
                 #seteamos el padre de w como v
                 vert_aux[w][3] = v
-                self.obterner_punto_articulacion_rec(puntos_articulacion, w, counter, vert_aux)
+                self.obtener_punto_articulacion_rec(puntos_articulacion, w, counter, vert_aux)
 
                 if(vert_aux[w][1] >= vert_aux[v][2]):
                     if(not v in puntos_articulacion and vert_aux[v][2] != 1):
