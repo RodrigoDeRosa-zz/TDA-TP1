@@ -1,4 +1,4 @@
-from iteradores_grafo import Bfs_iter
+#from iteradores_grafo import Bfs_iter
 import heapq
 VALOR_INALCANZABLE = 1000000000.0
 
@@ -28,9 +28,6 @@ class Graph(object):
         Devuelve la cantidad de vertices del grafo.
         """
         return len(self.vertices)
-
-    def __str__(self):
-        return self.vertices.__str__()
 
     def pertenece(self, clave):
         """
@@ -186,6 +183,56 @@ class Graph(object):
 
         return count == len(self.vertices)
 
+    def crear_vertices_aux(self):
+        v = {}
+        for w in self.vertices:
+            #Para cada vertice en el grafo, seteamos
+            #visitado, low, num, el padre y la raiz.
+            v[w] = [False,0,0,None, False]
+        return v
+
+    def obtener_punto_articulacion(self, vertice_comienzo):
+        """Funcion que recibe el vertice de comienzo como un string"""
+        counter = 0
+        puntos_articulacion = []
+        vert_aux = self.crear_vertices_aux()
+        vert_aux[vertice_comienzo][4]=True
+        self.obterner_punto_articulacion_rec(puntos_articulacion, vertice_comienzo, counter, vert_aux)
+        return puntos_articulacion
+
+    def obterner_punto_articulacion_rec(self, puntos_articulacion, v, counter, vert_aux):
+        counter += 1
+        #seteamos visitado en true, low y num
+        vert_aux[v][0] = True
+        vert_aux[v][1] = counter
+        vert_aux[v][2] = counter
+
+        vertices_conocidos = self.obtener_conocidos(v)
+        for w in vertices_conocidos:
+            #si no esta visitado
+            if( not vert_aux[w][0] ):
+                #seteamos el padre de w como v
+                vert_aux[w][3] = v
+                self.obterner_punto_articulacion_rec(puntos_articulacion, w, counter, vert_aux)
+
+                if(vert_aux[w][1] >= vert_aux[v][2]):
+                    if(not v in puntos_articulacion and vert_aux[v][2] != 1):
+                        puntos_articulacion.append(v)
+
+                    if(vert_aux[v][2] ==1):
+                        #A este if se entra solo una vez en el caso de que sea la raiz,
+                        #Esto se puede poner en la llamada  a la funcion
+                        count_hijos = 0
+                        for x in vert_aux:
+                            if (vert_aux[x][3] == v): count_hijos +=1
+                        if (count_hijos >= 2): puntos_articulacion.append(v)
+                #minimo entre v.low y w.low
+                vert_aux[v][1] = min(vert_aux[v][1], vert_aux[w][1])
+
+            elif(vert_aux[v][3] != w):
+                #minimo entre v.low y w.num
+                vert_aux[v][1] = min(vert_aux[v][1],vert_aux[w][2])
+
 
 ###################################################################################
 #                   FUNCIONES PUBLICAS
@@ -290,31 +337,26 @@ def grafo_tendido_minimo(grafo, peso_obtener):
 
     return grafo_minimo
 
-def crear_vertices_aux():
-    v = {}
-    for w in self.vertices:
-        #Para cada vertice en el grafo, seteamos
-        #visitado, low, num.
-        v[w] = [false,0,0]
-def obtener_punto_articulacion(self):
-  counter = 0
-  puntos_articulacion = []
-  vertices_aux = crear_vertices_aux()
-
-  self.obterner_punto_articulacion_rec(puntos_articulacion, vertices[0],counter)
-  return puntos_articulacion
-
-"""def obterner_punto_articulacion_rec(self, puntos_articulacion, v, counter):
-  v.visitado=True
-  counter += 1
-  v.low = counter
-  v.num = counter
-
-  for w in"""
 
 
 
+def prueba():
+    g=Graph()
+    g.aniadir_vertice("A",0)
+    g.aniadir_vertice("B",0)
+    g.aniadir_vertice("C",0)
+    g.aniadir_vertice("D",0)
+    g.aniadir_vertice("E",0)
 
+    g.unir_vertices("A","B",0)
+    g.unir_vertices("C","B",0)
+    g.unir_vertices("C","A",0)
+    g.unir_vertices("C","D",0)
+    g.unir_vertices("C","E",0)
+    g.unir_vertices("D","E",0)
+
+    print(g.obtener_punto_articulacion("E"))
+prueba()
 
 ###################################################################################
 #                   FUNCIONES PRIVADAS

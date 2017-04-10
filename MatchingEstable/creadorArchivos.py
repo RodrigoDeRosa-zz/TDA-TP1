@@ -8,7 +8,7 @@ class CreadorArchivos(object):
         #1 - |E|
         #2-#(2+|E|) - mi ... mj ... m(|H|-1) [Desde m0]
         #(2+|E|) - |H|
-        #(3+|E|)-#(3+|E|+|H|) - ni ... nj ... n(|E|-1) [Desde n0]
+        #(3+|E|)-#(3+|E+|H|) - ni ... nj ... n(|E|-1) [Desde n0]
         #(4+|E|+|H|) - x0 ... xi ... x(|H|)
         Con:
             |E| : cantidad de estudiantes.
