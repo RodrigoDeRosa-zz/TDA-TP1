@@ -11,7 +11,7 @@ class Graph(object):
     """
 
 
-    def __init__(self):
+    def __init__(self, dir = False):
         """
         El grafo se inicializa vacio.
         """
@@ -19,6 +19,7 @@ class Graph(object):
         self.vertices = {} #Diccionario de diccionarios. Matriz de adyacencias
         self.datos = {} #Diccionario de datos.
         self.tam = 0
+        self.dirigido = dir
 
     def __iter__(self):
         return self.vertices.__iter__()
@@ -28,6 +29,9 @@ class Graph(object):
         Devuelve la cantidad de vertices del grafo.
         """
         return len(self.vertices)
+
+    def __str__(self):
+        return str(self.vertices)
 
     def pertenece(self, clave):
         """
@@ -93,15 +97,18 @@ class Graph(object):
         y luego devuelve True.
         Si alguna de las dos claves no pertenece al grafo, no realiza nada y
         devuelve False.
+        Si el grafo es dirigido, solamente une la clave 1 apuntando a 2.
         """
 
         if (not self.pertenece(clave_1)) or (not self.pertenece(clave_2)):
             return False
 
         self.vertices[clave_1][clave_2] = peso
-        self.vertices[clave_2][clave_1] = peso
+        if(not self.dirigido):
+            self.vertices[clave_2][clave_1] = peso
 
         return True
+
 
     def obtener_peso(self, clave_1, clave_2):
         """
@@ -167,21 +174,6 @@ class Graph(object):
 
         return aristas
 
-    def es_conexo(self):
-        """
-        Devuelve True si el grafo es conexo. False de lo contrario.
-        """
-        if len(self.vertices) == 0:
-            return False
-
-        iter = Bfs_iter(self, self.vertices.keys()[0])
-        count = 0
-
-        while not iter.al_final():
-            iter.siguiente()
-            count += 1
-
-        return count == len(self.vertices)
 
     def crear_vertices_aux(self):
         v = {}
@@ -191,196 +183,132 @@ class Graph(object):
             v[w] = [False,0,0,None, False]
         return v
 
+    def invertir(self):
+        """Funcion que se encarga de invertir un grafo dirigido.
+        En caso de que el grafo no sea dirigido se devuelve el mismo grafo."""
+        if(not self.dirigido):
+            return self
+
+        g = Graph(True)
+
+        for v in self.vertices:
+            g.aniadir_vertice(v,0)
+            for x in self.obtener_conocidos(v):
+                g.aniadir_vertice(x,0)
+                g.unir_vertices(x,v,0)
+        return g
+
+    def obtener_dic_vertices_numerado(self):
+        """Funcion que nos devuelve un diccionario que contiene
+        la numeracion como clave de cada vertice"""
+        dic = {}
+
+        for x in self.vertices:
+            orden = self.datos[x]
+            dic[orden]=x
+
+        return dic
+
+
+    def obtener_componentes_conexas(self,vertice_comienzo):
+
+        #obtengo el grafo de dfs del grafo original
+        g_dfs = self.obtener_grafo_dfs(vertice_comienzo)
+
+        #Invertimos el grafo original
+        g_invertido = self.invertir()
+
+        #obtengo un diccionario que contiene la numeracion como clave
+        #y el string como valor.
+        dic_numeraciones = g_dfs.obtener_dic_vertices_numerado()
+
+        #Recorremos el grafo invertido en orden de numeracion decreciente
+        maximo_actual=len(dic_numeraciones)
+        componentes =[]
+        tam_aux = 0
+        visitados_totales = []
+
+        #condicion de corte: que nos quedemos sin nodos para recorrer
+        # o que ya se hayan visitado todos los nodos.
+        while(maximo_actual>0 and self.tam > tam_aux):
+            x=dic_numeraciones[maximo_actual]
+            if(not x in visitados_totales):
+                grafo_aux = g_invertido.obtener_grafo_dfs(x)
+                componentes.append(grafo_aux)
+                tam_aux += len(grafo_aux)
+                #agregamos a la lista los vertices ya visitados.
+                visitados_totales += grafo_aux.vertices.keys()
+            maximo_actual -= 1
+
+        return componentes
+
+
     def obtener_punto_articulacion(self, vertice_comienzo):
         """Funcion que recibe el vertice de comienzo como un string"""
-        counter = 0
-        puntos_articulacion = []
-        vert_aux = self.crear_vertices_aux()
-        vert_aux[vertice_comienzo][4]=True
-        self.obtener_punto_articulacion_rec(puntos_articulacion, vertice_comienzo, counter, vert_aux)
+
+        g = self.obtener_grafo_dfs(vertice_comienzo)
+        puntos_articulacion=[]
+        for x in g.vertices:
+            if(len(g.obtener_conocidos(x)) >=2):
+                puntos_articulacion.append(x)
         return puntos_articulacion
 
-    def obtener_punto_articulacion_rec(self, puntos_articulacion, v, counter, vert_aux):
-        counter += 1
-        #seteamos visitado en true, low y num
-        vert_aux[v][0] = True
-        vert_aux[v][1] = counter
-        vert_aux[v][2] = counter
 
-        vertices_conocidos = self.obtener_conocidos(v)
-        for w in vertices_conocidos:
-            #si no esta visitado
-            if( not vert_aux[w][0] ):
-                #seteamos el padre de w como v
-                vert_aux[w][3] = v
-                self.obtener_punto_articulacion_rec(puntos_articulacion, w, counter, vert_aux)
+    def obtener_grafo_dfs(self, v):
 
-                if(vert_aux[w][1] >= vert_aux[v][2]):
-                    if(not v in puntos_articulacion and vert_aux[v][2] != 1):
-                        puntos_articulacion.append(v)
+        g = Graph(True)
+        #LLeva el control de los vertices visitados
+        visitados = []
+        padres = []
+        stack = []
+        stack.append(v)
+        contador=0
 
-                    if(vert_aux[v][2] ==1):
-                        #A este if se entra solo una vez en el caso de que sea la raiz,
-                        #Esto se puede poner en la llamada  a la funcion
-                        count_hijos = 0
-                        for x in vert_aux:
-                            if (vert_aux[x][3] == v): count_hijos +=1
-                        if (count_hijos >= 2): puntos_articulacion.append(v)
-                #minimo entre v.low y w.low
-                vert_aux[v][1] = min(vert_aux[v][1], vert_aux[w][1])
+        for i in range(0,self.tam):
+            visitados.append(False)
+            padres.append(None)
 
-            elif(vert_aux[v][3] != w):
-                #minimo entre v.low y w.num
-                vert_aux[v][1] = min(vert_aux[v][1],vert_aux[w][2])
-
-
-###################################################################################
-#                   FUNCIONES PUBLICAS
-###################################################################################
-
-
-def grafo_a_estrella(grafo, origen, destino, heuristica):
-    """
-    Recibe un objeto del tipo grafo un valor de origen y otro de destino.
-    La funcion heuristica que a la vez recibe debe ser del estilo:
-    heuristica(dato vertice 1, dato vertice 2, peso entre vertice 1 y 2) y debe devolver un entero.
-
-    Devuelve un objeto del tipo grafo con la cualidad de ser de a estrella.
-    """
-
-    if type(grafo) != Graph:
-        raise TypeError
-    grafo_a = Graph()
-    if not len(grafo): return grafo_minimo
-
-    padre = {}
-    distancia = {}
-    visitados = {}
-    cola = []
-
-    for vertice in grafo:
-        padre[vertice] = None
-        distancia[vertice] = VALOR_INALCANZABLE
-        visitados[vertice] = False
-
-    distancia[str(origen)] = 0
-    grafo_a.aniadir_vertice(str(origen), grafo.obtener_dato(str(origen)))
-    heapq.heappush(cola, origen)
-
-    while len(cola) > 0:
-        minimo = heapq.heappop(cola)
-        minimo = str(minimo)
-        if int(minimo) == destino:
-            actual = minimo
-
-            while padre[actual]:
-                grafo_a.aniadir_vertice(actual, grafo.obtener_dato(actual))
-                grafo_a.aniadir_vertice(padre[actual], grafo.obtener_dato(padre[actual]))
-                grafo_a.unir_vertices(actual, padre[actual], grafo.obtener_peso(actual, padre[actual]))
-                actual = padre[actual]
-
-            return grafo_a
-
-        for conocido in grafo.obtener_conocidos(minimo):
-            distancia_v = distancia[minimo] + heuristica(grafo.obtener_dato(minimo), grafo.obtener_dato(conocido), grafo.obtener_peso(minimo,conocido))
-            if distancia[conocido] > distancia_v and visitados[conocido] == False:
-                padre[conocido] = minimo
-                distancia[conocido] = distancia_v
-                visitados[conocido] = True
-                if int(conocido) not in cola:
-                    heapq.heappush(cola, int(conocido))
-
-
-
-
-
-def grafo_tendido_minimo(grafo, peso_obtener):
-    """
-    Recibe un objeto del tipo grafo y una funcion de lectura de peso.
-    La funcion de lectura debe ser del estilo:
-    peso_obtener(peso1) y debe devolver el valor del peso.
-
-    Devuelve un objeto del tipo grafo con la cualidad de ser de tendido
-    minimo.
-    """
-
-    if type(grafo) != Graph:
-        raise TypeError
-    grafo_minimo = Graph()
-    if not len(grafo): return grafo_minimo
-
-    padre = {}
-    distancia = {}
-    cola = []
-
-    for vertice in grafo:
-        padre[vertice] = None
-        distancia[vertice] = VALOR_INALCANZABLE
-        heapq.heappush(cola, (distancia[vertice], vertice))
-        grafo_minimo.aniadir_vertice(vertice, grafo.datos[vertice])
-
-    primer_vertice = grafo.vertices.keys()[0]
-    distancia[primer_vertice] = 0
-    cola = _actualizar_cola_prioridad(cola, distancia)
-
-    while len(cola) > 0:
-        minimo = heapq.heappop(cola)[1]
-        for conocido in grafo.obtener_conocidos(minimo):
-            if _pertenece_cola(cola, conocido) and (distancia[conocido] > peso_obtener(grafo.vertices[minimo][conocido])):
-                padre[conocido] = minimo
-                distancia[conocido] = peso_obtener(grafo.vertices[minimo][conocido])
-            cola = _actualizar_cola_prioridad(cola, distancia)
-
-    for vertice in grafo:
-        if padre[vertice] == None: continue
-        grafo_minimo.unir_vertices(vertice, padre[vertice], grafo.vertices[vertice][padre[vertice]])
-
-    return grafo_minimo
-
-
+        while (len(stack)>0):
+            w=stack.pop()
+            if(not visitados[int(w)]):
+                contador +=1
+                g.aniadir_vertice(w,contador)
+                if(padres[int(w)] is not None):
+                    g.unir_vertices(padres[int(w)],w,0)
+                visitados[int(w)] = True
+                stack_aux = []
+                vertices_vecinos = self.obtener_conocidos(w)
+                for x in vertices_vecinos:
+                    if(not visitados[int(x)]):
+                        stack_aux.append(x)
+                        padres[int(x)] = w
+                while(len(stack_aux)>0):
+                    stack.append(stack_aux.pop())
+        return g
 
 
 def prueba():
-    g=Graph()
-    g.aniadir_vertice("A",0)
-    g.aniadir_vertice("B",0)
-    g.aniadir_vertice("C",0)
-    g.aniadir_vertice("D",0)
-    g.aniadir_vertice("E",0)
 
-    g.unir_vertices("A","B",0)
-    g.unir_vertices("C","B",0)
-    g.unir_vertices("C","A",0)
-    g.unir_vertices("C","D",0)
-    g.unir_vertices("C","E",0)
-    g.unir_vertices("D","E",0)
+    g=Graph(True)
+    g.aniadir_vertice("0",0)
+    g.aniadir_vertice("1",0)
+    g.aniadir_vertice("2",0)
+    g.aniadir_vertice("3",0)
+    g.aniadir_vertice("4",0)
+    g.aniadir_vertice("5",0)
+    g.aniadir_vertice("6",0)
 
-    print(g.obtener_punto_articulacion("E"))
+    g.unir_vertices("0","1",0)
+    g.unir_vertices("1","2",0)
+    g.unir_vertices("2","3",0)
+    g.unir_vertices("3","1",0)
+
+    g.unir_vertices("0","4",0)
+    g.unir_vertices("4","5",0)
+    g.unir_vertices("5","6",0)
+    g.unir_vertices("6","4",0)
+
+    a=g.obtener_componentes_conexas("0")
+    for x in a:
+        print x.vertices
 prueba()
-
-###################################################################################
-#                   FUNCIONES PRIVADAS
-###################################################################################
-
-def _pertenece_cola(cola, clave):
-    """
-    Devuelve True si pertenece a la cola de prioridad. False si no.
-    """
-    for elemento in cola:
-        if elemento[1] == clave:
-            return True
-    return False
-
-def _actualizar_cola_prioridad(cola, distancia):
-    """
-    Cola: Cola a ser actualizada. Formato (distancia, clave)
-    Distancia: Diccionario {clave : distancia}
-    """
-    cola_aux = []
-
-    for elemento in cola:
-        cola_aux.append((distancia[elemento[1]], elemento[1]))
-
-    heapq.heapify(cola_aux)
-
-    return cola_aux
