@@ -41,9 +41,7 @@ def galeShapleyVacants(A, E, Q):
 	"""
 	n = len(A) #Cantidad de aplicantes
 	pendientes = setQueue(n); #Cola de aplicantes por proponerse
-	H = [] #Lista de matching --> H[e] = lista de aplicantes aceptados
-	for i in xrange(n):
-		H.append([])
+	H = [ [] for i in xrange(n)] #Lista de matching --> H[e] = lista de aplicantes aceptados
 	sigDeseado = [0]*n #Posicion del proximo reviewer a proponerse de ai
 	preferencia = setPreferenceDict(E, n) #Diccionario de preferencias de cada reviewer
 
