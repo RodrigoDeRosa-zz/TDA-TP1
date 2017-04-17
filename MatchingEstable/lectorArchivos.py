@@ -34,7 +34,7 @@ class LectorArchivos(object):
 
             lista = []
             for i in xrange(0, len(total)):
-                lista.append(total[i]) #Se guardan los valores
+                lista.append(int(total[i])) #Se guardan los valores
             destino.append(lista)
 
     def initListas(self, filePath):
@@ -54,17 +54,16 @@ class LectorArchivos(object):
         archivo.close()
 
         #Las primer linea es |E| y no se usa asi que se omite
-        lineas = lineas[1:]
+        cantidadLineas = len(lineas)
+        e = int(lineas[0])
+        q = int(lineas[(cantidadLineas-1)/2])
 
-        estudiantes = lineas[:((len(lineas)-2)/2)] #Se resta |H| y Q y se divide por 2 (porque |E| == |H|)
+        estudiantes = lineas[1 : q + 1] #Se resta |H| y Q y se divide por 2 (porque |E| == |H|)
         self.guardarListas(E, estudiantes)
-
-        hospitales = lineas[ ((len(lineas)-2)/2) : len(lineas)-2] #Ahora se toman solo los hospitales
+        hospitales = lineas[ q + 2 : cantidadLineas - 1] #Ahora se toman solo los hospitales
         self.guardarListas(H, hospitales)
 
-        vacantes = lineas[len(lineas) - 1]
-        vacantes = vacantes.split(' ')
-        self.borrarBarraN(vacantes)
-        Q = vacantes
+        vacantes = lineas[cantidadLineas-1 : cantidadLineas]
+        self.guardarListas(Q, vacantes)
 
-        return (E, H, Q)
+        return (E, H, Q[0])

@@ -1,7 +1,7 @@
 import random
 
 TEST_FILE = "files/testFile.txt"
-MAX_VACANTES = 10
+MAX_VACANTES = 3
 
 class CreadorArchivos(object):
     """
