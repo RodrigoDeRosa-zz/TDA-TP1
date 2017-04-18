@@ -33,6 +33,9 @@ class Graph(object):
     def __str__(self):
         return str(self.vertices)
 
+    def get_vertices(self):
+        return self.vertices
+
     def pertenece(self, clave):
         """
         Clave: String o Int que representa al vertice/nodo.

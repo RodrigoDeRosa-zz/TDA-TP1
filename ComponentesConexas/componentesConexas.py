@@ -1,5 +1,5 @@
 from graph import Graph
-from PuntosDeArticulacion.lectorArchivos import LectorArchivos
+from lectorArchivos import LectorArchivos
 
 def main():
     lector = LectorArchivos()
