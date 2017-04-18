@@ -1,0 +1,65 @@
+\documentclass{article}
+
+\title{Trabajo Practico 1}
+\author{De Rosa - Schapira - Guerrero}
+\date{Primer Cuatrimestre 2017}
+
+\begin{document}
+    \pagenumbering{gobble}
+    \maketitle
+    \newpage
+    \pagenumbering{roman}
+    \tableofcontents
+    \newpage
+    \pagenumbering{arabic}
+
+    \section{Asignacion de residencias}
+        \subsection{Objetivo}
+            Solucionar el problema de la asignacion de residencias utilizando
+            el algoritmo de Gale-Shapley de Matching Estable.
+        \subsection{Conclusiones}
+            \subsubsection{Complejidad del algoritmo}
+                Si bien el ciclo principal del algoritmo (en el que se resuelve el
+                problema como si) tiene un orden de complejidad $O(nk)$, donde k
+                es la cantidad maxima de vacantes de cada hospital, el algoritmo
+                tiene un orden de complejidad $O(n^2)$ dado por la creacion de la
+                matriz de preferencias, pues es necesario analizar la posicion de
+                cada estudiante en la lista de cada uno de los hospitales.
+            \subsubsection{Tiempo de ejecucion}
+                Si se hacen pruebas con cantidades de estudiantes ($n$) y de hospitales
+                ($m$) iguales se obtienen los siguientes resultados:
+                %Tabla de resultados
+                \begin{table}[h!]
+                    \centering
+                    \caption{Tiempo de resolucion del problema}
+                    \begin{tabular}{c|c|c}
+                        n & m & t \\
+                        \hline
+                        10 & 10 & 0.6ms \\
+                        \hline
+                        100 & 100 & 30ms \\
+                        \hline
+                        500 & 500 & 2.5s \\
+                        \hline
+                        1000 & 1000 & 19.1s \\
+                        \hline
+                        3000 & 3000 & 8m 34s
+                    \end{tabular}
+                \end{table}
+
+                Como se puede ver, estos tiempos representan valores mucho menores a
+                los esperados por un algoritmo $O(n^2)$. Consideramos que esto es
+                resultado de la forma en que se crea la anteriormente mencionada
+                matriz de preferencias. Suponemos que la implementacion de los
+                diccionarios por comprension de Python permiten un rendimiento mucho
+                mejor que $O(n^2)$.
+            \subsubsection{Reduccion del problema de los casamientos}
+                El algoritmo implementado permite resolver el problema de matching
+                estable cuando el grupo de \emph{reviewers} puede aceptar a mas de
+                un \emph{aplicante}. Por lo tanto, si consideraramos que cada reviewer
+                puede aceptar solo a \underline{un} aplicante, tenemos el problema
+                de la formacion de parejas. Por lo tanto, vemos que ese problema
+                puede ser reducido al ya resuelto si la lista Q de vacantes es tal
+                que $Q = [1]*n$.
+
+\end{document}
