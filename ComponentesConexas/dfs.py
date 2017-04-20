@@ -7,36 +7,37 @@ class DFS(object):
     def __init__(self):
         pass
 
-    def getGrafoDFS(self, grafo, initVert):
+    def getGrafoDFS_con_tiempos(self, grafo, initVert, visitados):
         """
         Devuelve un grafo dirigido resultado de hacer un DFS en el grafo recibido,
         a partir del vertice indicado.
             - Grafo : Objeto de clase Graph.
             - Vertice : Vertice del grafo recibido.
         """
-        result = Graph(True)
-        visitados = [] #Lleva el control de los vertices visitados
+        g = Graph(True)
         padres = []
-        stack = [initVert]
+        stack = []
+        stack.append(initVert)
+        contador=0
 
-        k = 0
-        for i in xrange(0, grafo.tam):
-            vertice  = stack.pop()
-            if not visitados[int(vertice)]:
-                k += 1
-                result.aniadir_vertice(vertice, k)
-                if padres[int(vertice)] is not None:
-                    result.unir_vertices(padres[int(vertice)], vertice, 0)
+        cantVert = len(grafo.get_vertices().keys())
+        padres = [None]*cantVert
 
-                visitados[int(vertice)] = True
+        while (len(stack)>0):
+            w=stack.pop()
+            if(not visitados[int(w)]):
+                contador +=1
+                g.aniadir_vertice(w,contador)
+                if(padres[int(w)] is not None):
+                    g.unir_vertices(padres[int(w)],w,0)
+                visitados[int(w)] = True
+                stack_aux = []
+                vertices_vecinos = grafo.obtener_conocidos(w)
+                for x in vertices_vecinos:
+                    if(not visitados[int(x)]):
+                        stack_aux.append(x)
+                        padres[int(x)] = w
+                while(len(stack_aux)>0):
+                    stack.append(stack_aux.pop())
 
-                auxStack = []
-                verticesVecinos = grafo.obtener_conocidos(vertice)
-                for verticeVecino in verticesVecinos:
-                    if not visitados[int(verticeVecino)]:
-                        auxStack.append(verticeVecino)
-                        padres[int(verticeVecino)] = vertice
-                while len(auxStack) > 0:
-                    stack.append(auxStack.pop())
-
-        return result
+        return g, contador
