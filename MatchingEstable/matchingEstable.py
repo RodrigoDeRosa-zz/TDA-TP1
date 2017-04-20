@@ -1,7 +1,6 @@
 from creadorArchivos import CreadorArchivos
 from lectorArchivos import LectorArchivos
-from galeShapley import galeShapley
-from galeShapley import galeShapleyVacants
+from galeShapley import GaleShapley
 import time
 
 TEST1 = 10
@@ -22,11 +21,12 @@ TESTFILE5 = "files/m5.txt"
 def main():
     creador = CreadorArchivos()
     lector = LectorArchivos()
+    galeShapley = GaleShapley()
     E = []
     H = []
     Q = []
 
-    archivos = [ TESTFILE1, TESTFILE2, TESTFILE3, TESTFILE4, TESTFILE5 ]
+    archivos = [ TESTFILE1, TESTFILE2]
     cantidades = [ TEST1, TEST2, TEST3, TEST4, TEST5 ]
 
     respuestas = ["yes", "no", "y", "n", "si", "s"]
@@ -48,7 +48,7 @@ def main():
         (E, H, Q) = lector.initListas(archivos[i])
         print "Ejecutando algoritmo con " + str(cantidades[i]) + " hospitales y estudiantes..."
         init = time.time()
-        resultados = galeShapleyVacants(E, H, Q)
+        resultados = galeShapley.getParejas(E, H, Q)
         end = time.time()
         print "Tiempo transcurrido: " + str(end - init) + "s."
 
