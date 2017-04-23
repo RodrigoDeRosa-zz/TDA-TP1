@@ -4,3 +4,13 @@
 \contentsline {subsubsection}{\numberline {1.2.1}Complejidad del algoritmo}{1}
 \contentsline {subsubsection}{\numberline {1.2.2}Tiempo de ejecucion}{1}
 \contentsline {subsubsection}{\numberline {1.2.3}Reduccion del problema de los casamientos}{1}
+\contentsline {section}{\numberline {2}Puntos de Falla}{2}
+\contentsline {subsection}{\numberline {2.1}Objetivo}{2}
+\contentsline {subsection}{\numberline {2.2}Conclusiones}{2}
+\contentsline {subsubsection}{\numberline {2.2.1}Funcionamiento del algoritmo}{2}
+\contentsline {subsubsection}{\numberline {2.2.2}Tiempo de ejecucion}{2}
+\contentsline {section}{\numberline {3}Comunidades en Redes}{2}
+\contentsline {subsection}{\numberline {3.1}Objetivo}{2}
+\contentsline {subsection}{\numberline {3.2}Conclusiones}{3}
+\contentsline {subsubsection}{\numberline {3.2.1}Funcionamiento del algoritmo}{3}
+\contentsline {subsubsection}{\numberline {3.2.2}Tiempo de ejecucion}{3}

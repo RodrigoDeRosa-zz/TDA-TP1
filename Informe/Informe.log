@@ -1,12 +1,12 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.4.17)  17 APR 2017 21:53
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Debian) (preloaded format=pdflatex 2017.4.23)  23 APR 2017 17:29
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
 **Informe.tex
-(/home/rodrigo/Escritorio/FIUBA/Teoria de Algoritmos/TDA-TP1/Informe/Informe.tex
-LaTeX2e <2016/02/01>
-Babel <3.9q> and hyphenation patterns for 81 language(s) loaded.
+(/home/facundo/Desarrollo/TDA-TP1/Informe/Informe.tex
+LaTeX2e <2017/01/01> patch level 3
+Babel <3.9r> and hyphenation patterns for 3 language(s) loaded.
 (/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2014/09/29 v1.4h Standard LaTeX document class
 (/usr/share/texlive/texmf-dist/tex/latex/base/size10.clo
@@ -23,7 +23,7 @@ File: size10.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
 \abovecaptionskip=\skip41
 \belowcaptionskip=\skip42
 \bibindent=\dimen102
-) (/home/rodrigo/Escritorio/FIUBA/Teoria de Algoritmos/TDA-TP1/Informe/Informe.aux)
+) (/home/facundo/Desarrollo/TDA-TP1/Informe/Informe.aux)
 \openout1 = `Informe.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 7.
@@ -46,7 +46,7 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 9.
  [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (/home/rodrigo/Escritorio/FIUBA/Teoria de Algoritmos/TDA-TP1/Informe/Informe.toc
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (/home/facundo/Desarrollo/TDA-TP1/Informe/Informe.toc
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <7> on input line 2.
 LaTeX Font Info:    External font `cmex10' loaded for size
@@ -55,20 +55,26 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 \tf@toc=\write3
 \openout3 = `Informe.toc'.
 
- [1] [1] (/home/rodrigo/Escritorio/FIUBA/Teoria de Algoritmos/TDA-TP1/Informe/Informe.aux) ) 
+ [1]
+Missing character: There is no Ã in font cmr10!
+Missing character: There is no © in font cmr10!
+ [1]
+Missing character: There is no Ã in font cmr10!
+Missing character: There is no ³ in font cmr10!
+ [2] [3] (/home/facundo/Desarrollo/TDA-TP1/Informe/Informe.aux) ) 
 Here is how much of TeX's memory you used:
- 239 strings out of 493029
- 3291 string characters out of 6136234
- 57063 words of memory out of 5000000
- 3845 multiletter control sequences out of 15000+600000
+ 239 strings out of 494945
+ 2992 string characters out of 6181032
+ 51493 words of memory out of 5000000
+ 3604 multiletter control sequences out of 15000+600000
  8241 words of font info for 29 fonts, out of 8000000 for 9000
- 1141 hyphenation exceptions out of 8191
+ 14 hyphenation exceptions out of 8191
  23i,8n,18p,148b,198s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on "/home/rodrigo/Escritorio/FIUBA/Teoria de Algoritmos/TDA-TP1/Informe/Informe.pdf" (3 pages, 100431 bytes).
+Output written on /home/facundo/Desarrollo/TDA-TP1/Informe/Informe.pdf (5 pages, 107120 bytes).
 PDF statistics:
- 50 PDF objects out of 1000 (max. 8388607)
- 35 compressed objects within 1 object stream
+ 56 PDF objects out of 1000 (max. 8388607)
+ 39 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

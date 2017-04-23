@@ -62,4 +62,87 @@
                 puede ser reducido al ya resuelto si la lista Q de vacantes es tal
                 que $Q = [1]*n$.
 
+    \section{Puntos de Falla}
+        \subsection{Objetivo}
+            Encontrar los puntos de fallas (puntos de articulacion) de una red eléctrica
+            mediante el algoritmo de Hopcroft y Tarjan.
+        \subsection{Conclusiones}
+            \subsubsection{Funcionamiento del algoritmo}
+                El algoritmo comienza tomando un vertice cualquiera del grafo, a partir
+                del cual se realiza un recorrido dfs. Este genera un grafo del recorrido
+                iniciado en el vertice elegido. En este grafo, sera punto de articulacion
+                cada vertice que tenga dos o mas conocidos, es decir que tenga dos o mas
+                hijos. Luego para cada vertice en el grafo de recorrido dfs, chequeamos
+                la cantidad de vecinos que tiene y si se cumple la condición es un punto
+                de articulacion. Por lo tanto el orden del algoritmo sera $O(v+e)$.
+
+            \subsubsection{Tiempo de ejecucion}
+                Haciendo la prueba con una cantidad $(v)$ de vertices obtenemos lo siguiente:
+                %Tabla de resultados
+                \begin{table}[h!]
+                    \centering
+                    \caption{Tiempo de resolucion del problema}
+                    \begin{tabular}{c|c}
+                        v & t \\
+                        \hline
+                        10 & 0.25 ms \\
+                        \hline
+                        100 & 1.8 ms \\
+                        \hline
+                        1000 & 9.5 ms \\
+                        \hline
+                        10000 & 0.093 s \\
+                        \hline
+                        100000 & 0.99 s \\
+                        \hline
+                        1000000 & 10.34 s
+                    \end{tabular}
+                \end{table}
+
+                Como se puede observar, los tiempos aumentan linealmente a medida
+                que aumenta la cantidad de vertices. Esto condice con los tiempos
+                esperados del algoritmo.
+
+
+    \section{Comunidades en Redes}
+        \subsection{Objetivo}
+          Encontrar las componentes fuertemente conexas de las comunidades en las
+          redes implementando el algoritmo de kosaraju.
+        \subsection{Conclusiones}
+            \subsubsection{Funcionamiento del algoritmo}
+                El algoritmo comienza realizando un recorrido dfs de cada uno de los
+                vertices. Esto se realiza para ordenar los vertices en sentido
+                decreciente de acuerdo a su tiempo de finalizacion entre todos los
+                recorridos dfs. Una vez que se obtiene el orden de los vertices,
+                se invierte el grafo, es decir que se invierten todas sus aristas.
+                El tiempo que toma invertir el grafo es $O(v+e)$. Luego se vuelve a
+                realizar un recorrido dfs para cada vertice iniciando por el vertice
+                que tiene mayor tiempo de finalizacion. Cada grafo que devuelve cada
+                recorrido dfs es una componente fuertemente conexa.
+                El orden del algoritmo sera $O(v+e)$
+
+            \subsubsection{Tiempo de ejecucion}
+              Haciendo la prueba con una cantidad v de vertices y a de aristas obtenemos:
+              %Tabla de resultados
+                \begin{table}[h!]
+                    \centering
+                    \caption{Tiempo de resolucion del problema}
+                    \begin{tabular}{c|c|c}
+                        v & a & t \\
+                        \hline
+                        10 & 20 & 0.00084 s \\
+                        \hline
+                        100 & 250 & 0.048 s \\
+                        \hline
+                        1000 & 2500 & 3.008 s \\
+                        \hline
+                        10000 & 25000 & 322.01 s
+                    \end{tabular}
+                \end{table}
+
+                Como podemos observar, los tiempos de resolucion aumentan en medida
+                cuadratica. Esto no concuerda con la prediccion esperada, la cual es
+                lineal. Atribuimos esto a la eficiencia de la computadora en la que
+                se hicieron las pruebas.
+
 \end{document}
