@@ -19,12 +19,12 @@
             el algoritmo de Gale-Shapley de Matching Estable.
         \subsection{Conclusiones}
             \subsubsection{Complejidad del algoritmo}
-                Si bien el ciclo principal del algoritmo (en el que se resuelve el
-                problema como si) tiene un orden de complejidad $O(nk)$, donde k
-                es la cantidad maxima de vacantes de cada hospital, el algoritmo
-                tiene un orden de complejidad $O(n^2)$ dado por la creacion de la
-                matriz de preferencias, pues es necesario analizar la posicion de
-                cada estudiante en la lista de cada uno de los hospitales.
+                Si bien el ciclo principal del algoritmo (sin tener en cuenta 
+                llamadas a funciones internas dentro de él) tiene un orden de complejidad 
+                $O(nk)$, donde k es la cantidad maxima de vacantes de cada hospital, 
+                el algoritmo tiene un orden de complejidad $O(n^2)$. Esto se da por la 
+                creacion de la matriz de preferencias, pues es necesario al calcularla analizar 
+                la posicion de cada estudiante en la lista que contiene a cada uno de los hospitales.
             \subsubsection{Tiempo de ejecucion}
                 Si se hacen pruebas con cantidades de estudiantes ($n$) y de hospitales
                 ($m$) iguales se obtienen los siguientes resultados:
@@ -73,7 +73,7 @@
                 iniciado en el vertice elegido. En este grafo, sera punto de articulacion
                 cada vertice que tenga dos o mas conocidos, es decir que tenga dos o mas
                 hijos. Luego para cada vertice en el grafo de recorrido dfs, chequeamos
-                la cantidad de vecinos que tiene y si se cumple la condición es un punto
+                la cantidad de vecinos que tiene. Si se cumple la condición, entonces es un punto
                 de articulacion. Por lo tanto el orden del algoritmo sera $O(v+e)$.
 
             \subsubsection{Tiempo de ejecucion}
@@ -117,7 +117,7 @@
                 se invierte el grafo, es decir que se invierten todas sus aristas.
                 El tiempo que toma invertir el grafo es $O(v+e)$. Luego se vuelve a
                 realizar un recorrido dfs para cada vertice iniciando por el vertice
-                que tiene mayor tiempo de finalizacion. Cada grafo que devuelve cada
+                que tiene mayor tiempo de finalizacion. Cada grafo que devuelto por cada
                 recorrido dfs es una componente fuertemente conexa.
                 El orden del algoritmo sera $O(v+e)$
 
