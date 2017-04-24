@@ -1,4 +1,5 @@
 \documentclass{article}
+\usepackage[utf8]{inputenc}
 
 \title{Trabajo Practico 1}
 \author{De Rosa - Schapira - Guerrero}
@@ -19,19 +20,19 @@
             el algoritmo de Gale-Shapley de Matching Estable.
         \subsection{Conclusiones}
             \subsubsection{Complejidad del algoritmo}
-                Si bien el ciclo principal del algoritmo (sin tener en cuenta 
-                llamadas a funciones internas dentro de él) tiene un orden de complejidad 
-                $O(nk)$, donde k es la cantidad maxima de vacantes de cada hospital, 
-                el algoritmo tiene un orden de complejidad $O(n^2)$. Esto se da por la 
-                creacion de la matriz de preferencias, pues es necesario al calcularla analizar 
-                la posicion de cada estudiante en la lista que contiene a cada uno de los hospitales.
+                Si bien el ciclo principal del algoritmo (sin tener en cuenta
+                llamadas a funciones internas dentro de él) tiene un orden de complejidad
+                $O(nk)$, donde k es la cantidad máxima de vacantes de cada hospital,
+                el algoritmo tiene un orden de complejidad $O(n^2)$. Esto se da por la
+                creación de la matriz de preferencias, pues es necesario al calcularla analizar
+                la posición de cada estudiante en la lista que contiene a cada uno de los hospitales.
             \subsubsection{Tiempo de ejecucion}
                 Si se hacen pruebas con cantidades de estudiantes ($n$) y de hospitales
                 ($m$) iguales se obtienen los siguientes resultados:
                 %Tabla de resultados
                 \begin{table}[h!]
                     \centering
-                    \caption{Tiempo de resolucion del problema}
+                    \caption{Tiempo de resolución del problema}
                     \begin{tabular}{c|c|c}
                         n & m & t \\
                         \hline
@@ -50,15 +51,15 @@
                 Como se puede ver, estos tiempos representan valores mucho menores a
                 los esperados por un algoritmo $O(n^2)$. Consideramos que esto es
                 resultado de la forma en que se crea la anteriormente mencionada
-                matriz de preferencias. Suponemos que la implementacion de los
-                diccionarios por comprension de Python permiten un rendimiento mucho
+                matriz de preferencias. Suponemos que la implementación de los
+                diccionarios por comprensión de Python permiten un rendimiento mucho
                 mejor que $O(n^2)$.
             \subsubsection{Reduccion del problema de los casamientos}
                 El algoritmo implementado permite resolver el problema de matching
-                estable cuando el grupo de \emph{reviewers} puede aceptar a mas de
+                estable cuando el grupo de \emph{reviewers} puede aceptar a más de
                 un \emph{aplicante}. Por lo tanto, si consideraramos que cada reviewer
                 puede aceptar solo a \underline{un} aplicante, tenemos el problema
-                de la formacion de parejas. Por lo tanto, vemos que ese problema
+                de la formación de parejas. Entonces, vemos que ese problema
                 puede ser reducido al ya resuelto si la lista Q de vacantes es tal
                 que $Q = [1]*n$.
 
@@ -70,18 +71,18 @@
             \subsubsection{Funcionamiento del algoritmo}
                 El algoritmo comienza tomando un vertice cualquiera del grafo, a partir
                 del cual se realiza un recorrido dfs. Este genera un grafo del recorrido
-                iniciado en el vertice elegido. En este grafo, sera punto de articulacion
-                cada vertice que tenga dos o mas conocidos, es decir que tenga dos o mas
-                hijos. Luego para cada vertice en el grafo de recorrido dfs, chequeamos
+                iniciado en el vértice elegido. En este grafo, será punto de articulación
+                cada vértice que tenga dos o mas conocidos, es decir que tenga dos o mas
+                hijos. Luego para cada vértice en el grafo de recorrido dfs, chequeamos
                 la cantidad de vecinos que tiene. Si se cumple la condición, entonces es un punto
-                de articulacion. Por lo tanto el orden del algoritmo sera $O(v+e)$.
+                de articulacion. Por lo tanto el orden del algoritmo será $O(v+e)$.
 
             \subsubsection{Tiempo de ejecucion}
-                Haciendo la prueba con una cantidad $(v)$ de vertices obtenemos lo siguiente:
+                Haciendo la prueba con una cantidad $(v)$ de vértices obtenemos lo siguiente:
                 %Tabla de resultados
                 \begin{table}[h!]
                     \centering
-                    \caption{Tiempo de resolucion del problema}
+                    \caption{Tiempo de resolución del problema}
                     \begin{tabular}{c|c}
                         v & t \\
                         \hline
@@ -100,33 +101,33 @@
                 \end{table}
 
                 Como se puede observar, los tiempos aumentan linealmente a medida
-                que aumenta la cantidad de vertices. Esto condice con los tiempos
+                que aumenta la cantidad de vértices. Esto condice con los tiempos
                 esperados del algoritmo.
 
 
     \section{Comunidades en Redes}
         \subsection{Objetivo}
-          Encontrar las componentes fuertemente conexas de las comunidades en las
+          Encontrar las componentes fuertemente conéxas de las comunidades en las
           redes implementando el algoritmo de kosaraju.
         \subsection{Conclusiones}
             \subsubsection{Funcionamiento del algoritmo}
                 El algoritmo comienza realizando un recorrido dfs de cada uno de los
-                vertices. Esto se realiza para ordenar los vertices en sentido
-                decreciente de acuerdo a su tiempo de finalizacion entre todos los
-                recorridos dfs. Una vez que se obtiene el orden de los vertices,
-                se invierte el grafo, es decir que se invierten todas sus aristas.
+                vértices. Esto se realiza para ordenar los vértices en sentido
+                decreciente de acuerdo a su tiempo de finalización entre todos los
+                recorridos dfs. Una vez que se obtiene el órden de los vértices,
+                se invierte el grafo, es decir que se invierten todas sus arístas.
                 El tiempo que toma invertir el grafo es $O(v+e)$. Luego se vuelve a
-                realizar un recorrido dfs para cada vertice iniciando por el vertice
-                que tiene mayor tiempo de finalizacion. Cada grafo que devuelto por cada
-                recorrido dfs es una componente fuertemente conexa.
-                El orden del algoritmo sera $O(v+e)$
+                realizar un recorrido dfs para cada vértice iniciando por el vértice
+                que tiene mayor tiempo de finalización. Cada grafo que devuelto por cada
+                recorrido dfs es una componente fuertemente conéxa.
+                El órden del algoritmo será $O(v+e)$
 
             \subsubsection{Tiempo de ejecucion}
-              Haciendo la prueba con una cantidad v de vertices y a de aristas obtenemos:
+              Haciendo la prueba con una cantidad v de vértices y a de arístas obtenemos:
               %Tabla de resultados
                 \begin{table}[h!]
                     \centering
-                    \caption{Tiempo de resolucion del problema}
+                    \caption{Tiempo de resolución del problema}
                     \begin{tabular}{c|c|c}
                         v & a & t \\
                         \hline
@@ -140,9 +141,9 @@
                     \end{tabular}
                 \end{table}
 
-                Como podemos observar, los tiempos de resolucion aumentan en medida
-                cuadratica. Esto no concuerda con la prediccion esperada, la cual es
-                lineal. Atribuimos esto a la eficiencia de la computadora en la que
+                Como podemos observar, los tiempos de resolución aumentan en medida
+                cuadratica. Esto no concuerda con la predicción esperada, la cuál es
+                lineál. Atribuimos esto a la eficiencia de la computadora en la que
                 se hicieron las pruebas.
 
 \end{document}
