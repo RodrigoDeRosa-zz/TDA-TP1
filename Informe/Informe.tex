@@ -16,7 +16,7 @@
 
     \section{Asignacion de residencias}
         \subsection{Objetivo}
-            Solucionar el problema de la asignacion de residencias utilizando
+            Solucionar el problema de la asignación de residencias utilizando
             el algoritmo de Gale-Shapley de Matching Estable.
         \subsection{Conclusiones}
             \subsubsection{Complejidad del algoritmo}
@@ -57,7 +57,7 @@
             \subsubsection{Reduccion del problema de los casamientos}
                 El algoritmo implementado permite resolver el problema de matching
                 estable cuando el grupo de \emph{reviewers} puede aceptar a más de
-                un \emph{aplicante}. Por lo tanto, si consideraramos que cada reviewer
+                un \emph{aplicante}. Por lo tanto, si consideráramos que cada reviewer
                 puede aceptar solo a \underline{un} aplicante, tenemos el problema
                 de la formación de parejas. Entonces, vemos que ese problema
                 puede ser reducido al ya resuelto si la lista Q de vacantes es tal
@@ -65,17 +65,17 @@
 
     \section{Puntos de Falla}
         \subsection{Objetivo}
-            Encontrar los puntos de fallas (puntos de articulacion) de una red eléctrica
+            Encontrar los puntos de fallas (puntos de articulación) de una red eléctrica
             mediante el algoritmo de Hopcroft y Tarjan.
         \subsection{Conclusiones}
             \subsubsection{Funcionamiento del algoritmo}
-                El algoritmo comienza tomando un vertice cualquiera del grafo, a partir
+                El algoritmo comienza tomando un vértice cualquiera del grafo, a partir
                 del cual se realiza un recorrido dfs. Este genera un grafo del recorrido
                 iniciado en el vértice elegido. En este grafo, será punto de articulación
                 cada vértice que tenga dos o mas conocidos, es decir que tenga dos o mas
                 hijos. Luego para cada vértice en el grafo de recorrido dfs, chequeamos
                 la cantidad de vecinos que tiene. Si se cumple la condición, entonces es un punto
-                de articulacion. Por lo tanto el orden del algoritmo será $O(v+e)$.
+                de articulación. Por lo tanto el orden del algoritmo será $O(v+e)$.
 
             \subsubsection{Tiempo de ejecucion}
                 Haciendo la prueba con una cantidad $(v)$ de vértices obtenemos lo siguiente:
@@ -107,20 +107,20 @@
 
     \section{Comunidades en Redes}
         \subsection{Objetivo}
-          Encontrar las componentes fuertemente conéxas de las comunidades en las
+          Encontrar las componentes fuertemente conexas de las comunidades en las
           redes implementando el algoritmo de kosaraju.
         \subsection{Conclusiones}
             \subsubsection{Funcionamiento del algoritmo}
                 El algoritmo comienza realizando un recorrido dfs de cada uno de los
                 vértices. Esto se realiza para ordenar los vértices en sentido
                 decreciente de acuerdo a su tiempo de finalización entre todos los
-                recorridos dfs. Una vez que se obtiene el órden de los vértices,
-                se invierte el grafo, es decir que se invierten todas sus arístas.
+                recorridos dfs. Una vez que se obtiene el orden de los vértices,
+                se invierte el grafo, es decir que se invierten todas sus aristas.
                 El tiempo que toma invertir el grafo es $O(v+e)$. Luego se vuelve a
                 realizar un recorrido dfs para cada vértice iniciando por el vértice
                 que tiene mayor tiempo de finalización. Cada grafo que devuelto por cada
-                recorrido dfs es una componente fuertemente conéxa.
-                El órden del algoritmo será $O(v+e)$
+                recorrido dfs es una componente fuertemente conexa.
+                El orden del algoritmo será $O(v+e)$
 
             \subsubsection{Tiempo de ejecucion}
               Haciendo la prueba con una cantidad v de vértices y a de arístas obtenemos:
@@ -142,8 +142,13 @@
                 \end{table}
 
                 Como podemos observar, los tiempos de resolución aumentan en medida
-                cuadratica. Esto no concuerda con la predicción esperada, la cuál es
-                lineál. Atribuimos esto a la eficiencia de la computadora en la que
+                cuadrática. Esto no concuerda con la predicción esperada, la cuál es
+                lineal. Atribuimos esto a la eficiencia de la computadora en la que
                 se hicieron las pruebas.
+
+    \section{Comandos}
+      python matchingEstable.py \\
+      python puntosDeArticulacion.py \\
+      python componentesConexas.py
 
 \end{document}

@@ -14,3 +14,4 @@
 \contentsline {subsection}{\numberline {3.2}Conclusiones}{3}
 \contentsline {subsubsection}{\numberline {3.2.1}Funcionamiento del algoritmo}{3}
 \contentsline {subsubsection}{\numberline {3.2.2}Tiempo de ejecucion}{3}
+\contentsline {section}{\numberline {4}Comandos}{3}
