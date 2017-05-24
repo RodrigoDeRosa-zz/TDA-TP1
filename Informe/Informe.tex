@@ -70,12 +70,16 @@
         \subsection{Conclusiones}
             \subsubsection{Funcionamiento del algoritmo}
                 El algoritmo comienza tomando un vértice cualquiera del grafo, a partir
-                del cual se realiza un recorrido dfs. Este genera un grafo del recorrido
-                iniciado en el vértice elegido. En este grafo, será punto de articulación
-                cada vértice que tenga dos o mas conocidos, es decir que tenga dos o mas
-                hijos. Luego para cada vértice en el grafo de recorrido dfs, chequeamos
-                la cantidad de vecinos que tiene. Si se cumple la condición, entonces es un punto
-                de articulación. Por lo tanto el orden del algoritmo será $O(v+e)$.
+                del cual se realiza un recorrido dfs y se numeran los vertices en el orden
+                en que fueron visitados, lo cual llamamos distancia de descubrimiento.
+                Luego mediante otro recorrido dfs, enumeramos para todos los hijos el menor
+                tiempo de descubrimiento, teniendo en cuenta el del padre, a esto lo denominamos
+                lowpoint. Por ultimo realizamos un recorrido para obtener los puntos de articulacion
+                del grafo teniendo en cuenta 2 condiciones. La primera es que si un nodo es raiz
+                y tiene mas de 2 hijos, es punto de articulacion. La segunda condicion es:
+                low [ hijo ] >= distancia [ padre ].
+                Por lo tanto el orden del algoritmo será $O(v+e)$, ya que lo unico que se hace
+                son recorridos dfs en instancias separadas.
 
             \subsubsection{Tiempo de ejecucion}
                 Haciendo la prueba con una cantidad $(v)$ de vértices obtenemos lo siguiente:
@@ -86,23 +90,27 @@
                     \begin{tabular}{c|c}
                         v & t \\
                         \hline
-                        10 & 0.25 ms \\
+                        10 & 0.53 ms \\
                         \hline
-                        100 & 1.8 ms \\
+                        100 & 4.52 ms \\
                         \hline
-                        1000 & 9.5 ms \\
+                        1000 & 22.74 ms \\
                         \hline
-                        10000 & 0.093 s \\
+                        10000 & 0.24 s \\
                         \hline
-                        100000 & 0.99 s \\
+                        100000 & 5.87 s \\
                         \hline
-                        1000000 & 10.34 s
+                        1000000 & 22,39 m
                     \end{tabular}
                 \end{table}
 
                 Como se puede observar, los tiempos aumentan linealmente a medida
-                que aumenta la cantidad de vértices. Esto condice con los tiempos
-                esperados del algoritmo.
+                que aumenta la cantidad de vértices hasta la anteultima prueba.
+                Esto condice con los tiempos esperados del algoritmo. La ultima prueba
+                tiene un salto temporal, que lo atribuimos a las desventajas que nos
+                pudo haber generado realizarlo iterativo en vez de recursivo. Sin
+                embargo, la version iterativa nos permite probar 1000000 de vertices,
+                cuando la recursiva no lo soporta.
 
 
     \section{Comunidades en Redes}
