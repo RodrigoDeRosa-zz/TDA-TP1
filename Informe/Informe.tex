@@ -20,13 +20,9 @@
             el algoritmo de Gale-Shapley de Matching Estable.
         \subsection{Conclusiones}
             \subsubsection{Complejidad del algoritmo}
-                Si bien el ciclo principal del algoritmo (sin tener en cuenta
-                llamadas a funciones internas dentro de él) tiene un orden de complejidad
-                $O(nk)$, donde k es la cantidad máxima de vacantes de cada hospital,
-                el algoritmo tiene un orden de complejidad $O(n^2)$. Esto se da por la
-                creación de la matriz de preferencias, pues es necesario al calcularla analizar
-                la posición de cada estudiante en la lista que contiene a cada uno de los hospitales.
-            \subsubsection{Tiempo de ejecucion}
+                Se prueba que el algoritmo tiene una complejidad $O(n(n-1) + 1)$ pero
+                dado que es un análisis de peor caso, en la práctica se obtuvo un rendimiento
+                mejor. \\
                 Si se hacen pruebas con cantidades de estudiantes ($n$) y de hospitales
                 ($m$) iguales se obtienen los siguientes resultados:
                 %Tabla de resultados
@@ -49,19 +45,38 @@
                 \end{table}
 
                 Como se puede ver, estos tiempos representan valores mucho menores a
-                los esperados por un algoritmo $O(n^2)$. Consideramos que esto es
-                resultado de la forma en que se crea la anteriormente mencionada
-                matriz de preferencias. Suponemos que la implementación de los
-                diccionarios por comprensión de Python permiten un rendimiento mucho
-                mejor que $O(n^2)$.
+                los esperados por un algoritmo $O(n(n-1)+1)$.
             \subsubsection{Reduccion del problema de los casamientos}
-                El algoritmo implementado permite resolver el problema de matching
-                estable cuando el grupo de \emph{reviewers} puede aceptar a más de
-                un \emph{aplicante}. Por lo tanto, si consideráramos que cada reviewer
-                puede aceptar solo a \underline{un} aplicante, tenemos el problema
-                de la formación de parejas. Entonces, vemos que ese problema
-                puede ser reducido al ya resuelto si la lista Q de vacantes es tal
-                que $Q = [1]*n$.
+                El problema de la asignación de residencias puede reducirse al problema
+                de los casamientos en tiempo polinomial de la siguiente manera: \\
+                Teniendo en cuenta que se dispone de una lista H de listas de preferencias
+                donde en cada indice se encuentra la lista de preferencias del hospital
+                representado por dicho indice, una lista E del mismo estilo pero para los
+                estudiantes y una lista Q que en cada indice tiene un entero que representa
+                las vacantes del hospital de dicho indice, podemos adaptar esta informacion
+                a la necesaria para ser procesada por el algoritmo de formacion de parejas de
+                Gale Shapley adaptando la lista H a una nueva H' con la información de Q. \\
+                La manera de hacer esto sería: \\
+                H' contendrá las listas de preferencias de H pero repetidas Q[i] veces. Es decir,
+                si H[0] tenia 3 vacantes, entonces en H', H[0], H[1] y H[2] tendrán las mismas preferencias
+                y el hospital 0 pasará a ser representado por el conjunto {0, 1, 2}. \\
+                Dicho esto, ahora habría que crear una lista E' donde, para cada lista de
+                preferencias E[i], existirá una lista E'[i] donde para cada hospital k, se
+                pondrá el conjunto k = {p, q, r}. En el ejemplo anterior, si E[i] = [0], entonces
+                E'[i] = [0, 1, 2]. \\
+                Con estas listas inicializadas, se corre Gale Shapley que devolverá parejas para
+                cada hospital de H'. Es decir, P = [(H'i, E'k), ..., (H'n, E'j)]. Donde solo len(E) estudiantes
+                serán no NULL. Ahora, como ya conocemos en que H'k se convirtió cada Hi, podemos agrupar
+                los E' de las parejas devueltas por Gale Shapley para finalizar el algoritmo y resolver el
+                problema de asignación de residencias. Es decir, con el ejemplo anterior, pondremos para el
+                hospital 0, los estudiantes asignados por Gale Shapley a los hospitales H'[0], H'[1] y H'[2]. \\
+                Si analizamos la complejidad, podemos ver lo siguiente: \\
+                Crear la lista H' es $O(m*q)$, siendo m la cantidad de estudiantes y q la sumatoria de todas las vacantes,
+                pues hay q listas de m elementos (antes eran n pero ahora se repiten q veces). \\
+                Crear la lista E' es $O(m*q)$, siendo m y q los mismos de antes, pues hay m listas de q elementos. \\
+                Gale Shapley es polinomial. \\
+                Adaptar el resultado es $O(q)$, pues se debe recorrer una lista de q parejas, añadiendo el estudiante
+                de cada pareja al hospital que corresponda según los cambios hechos al principio.
 
     \section{Puntos de Falla}
         \subsection{Objetivo}
@@ -80,7 +95,7 @@
             \subsubsection{Tiempo de ejecucion}
                 Haciendo la prueba con una cantidad $(v)$ de vértices obtenemos lo siguiente:
                 %Tabla de resultados
-                \begin{table}[h!]
+                \begin{table}[h]
                     \centering
                     \caption{Tiempo de resolución del problema}
                     \begin{tabular}{c|c}
@@ -147,8 +162,11 @@
                 se hicieron las pruebas.
 
     \section{Comandos}
-      python matchingEstable.py \\
-      python puntosDeArticulacion.py \\
-      python componentesConexas.py
+        Para correr los archivos, entrar en la carpeta correspondiente al algoritmo y ejecutar: \\
+        python matchingEstable.py \\
+        python puntosDeArticulacion.py \\
+        python componentesConexas.py \\ \\
+        ATENCIÓN: Se deben agregar los archivos de prueba para puntos de articulacion y componentes
+        conexas. No se enviaron debido al peso que soporta gmail.
 
 \end{document}
