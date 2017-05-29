@@ -9,17 +9,21 @@ class Tarjan(object):
         self.grafo = grafo
 
     def getPuntosDeArticulacion(self):
-        vertice = self.grafo.get_vertices().keys()[0] #Se toma el primer vertice del grafo
+        #Se toma el primer vertice del grafo
+        vertice = self.grafo.get_vertices().keys()[0]
 
-        dfs = DFS() #Creador de grafos dfs
+        #Creador de grafos dfs
+        dfs = DFS(vertice, self.grafo) 
 
-        grafoDFS = dfs.getGrafoDFS(self.grafo, vertice)
-        puntosArticulacion = []
+        #se obtiene el DFS del grafo. Este guarda en el valor de cada vertice un 
+        #tiempo de descubrimiento. Tambien se obtiene una lista con los padres 
+        #de cada vertice
+        grafoDFS, padres = dfs.getGrafoDFS()
 
-        for vertice in grafoDFS.get_vertices().keys():
-            if len(grafoDFS.obtener_conocidos(vertice)) >= 2:
-                #Todo vertice con dos hijos o mas en un arbol DFS
-                #es punto de articulacion
-                puntosArticulacion.append(vertice)
+        #se obtiene una lista con el lowpoint de cada vertice 
+        lowList = dfs.getLowList(padres, grafoDFS)
+
+        #se obtienen los puntos de articulacion del grafo original
+        puntosArticulacion = dfs.getPuntosDeArticulacion(padres, grafoDFS, lowList)
 
         return puntosArticulacion
