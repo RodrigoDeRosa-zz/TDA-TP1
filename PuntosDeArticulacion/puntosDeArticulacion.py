@@ -12,7 +12,7 @@ GRAFO6 = "files/g6.txt"
 
 def main():
     lector = LectorArchivos()
-    archivos = [GRAFO1, GRAFO2, GRAFO3, GRAFO4, GRAFO5, GRAFO6]
+    archivos = [GRAFO1, GRAFO2, GRAFO3, GRAFO4]#, GRAFO5, GRAFO6]
 
     respuestas = ["yes", "no", "y", "n", "si", "s"]
     yes = ["yes", "y", "si", "s"]

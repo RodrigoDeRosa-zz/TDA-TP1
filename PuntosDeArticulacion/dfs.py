@@ -51,41 +51,40 @@ class DFS(object):
         puntosDeArticulacion = []
         low = [0]*cantVert
         num = [0]*cantVert
+        count = 0
 
         self.getPuntosDeArticulacionRec(self.initVert, visitados, padres, low, num, puntosDeArticulacion, count)
 
         return puntosDeArticulacion
 
     def getPuntosDeArticulacionRec(self, vertice, visitados, padres, low, num, puntosDeArticulacion, count):
-    """
-    Devuelve un grafo dirigido resultado de hacer un DFS en el grafo recibido,
-    a partir del vertice indicado.
-        - Grafo : Objeto de clase Graph.
-        - Vertice : Vertice del grafo recibido.
-    """
+        """
+        Devuelve un grafo dirigido resultado de hacer un DFS en el grafo recibido,
+        a partir del vertice indicado.
+            - Grafo : Objeto de clase Graph.
+            - Vertice : Vertice del grafo recibido.
+        """
 
-    visitados[int(vertice)] = True
-    count ++
-    low[int(vertice)] = count
-    low[int(vertice)] = count
+        visitados[int(vertice)] = True
+        count += 1
+        low[int(vertice)] = count
+        low[int(vertice)] = count
 
-    for verticeVecino in self.grafo.obtener_conocidos(vertice):
+        for verticeVecino in self.grafo.obtener_conocidos(vertice):
 
-        if not visitados[int(verticeVecino)]:
+            if not visitados[int(verticeVecino)]:
 
-            padres[int(verticeVecino)] = vertice
-            getPuntosDeArticulacion(self, verticeVecino, visitados, padres, low, num, puntosDeArticulacion, count)
+                padres[int(verticeVecino)] = vertice
+                self.getPuntosDeArticulacionRec(verticeVecino, visitados, padres, low, num, puntosDeArticulacion, count)
 
-            if( (low[int(verticeVecino)] >= num[int(vertice)] ) and (vertice not in puntosDeArticulacion)):    
-                puntosDeArticulacion.append(vertice)
-            low[int(vertice)] = min( low[int(vertice)], low[int(verticeVecino)] )
-            
-        elif (padres[int(vertice)] != verticeVecino):
-            low[int(vertice)] = min( low[int(vertice)], num[int(verticeVecino)] )
-                        
+                if( (low[int(verticeVecino)] >= num[int(vertice)] ) and (vertice not in puntosDeArticulacion)):    
+                    puntosDeArticulacion.append(vertice)
+                low[int(vertice)] = min( low[int(vertice)], low[int(verticeVecino)] )
+                
+            elif (padres[int(vertice)] != verticeVecino):
+                low[int(vertice)] = min( low[int(vertice)], num[int(verticeVecino)] )
 
 
-            
     # def getPuntosDeArticulacion(self):
     #     """
     #     Devuelve un grafo dirigido resultado de hacer un DFS en el grafo recibido,
