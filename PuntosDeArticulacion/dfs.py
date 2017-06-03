@@ -8,7 +8,7 @@ class DFS(object):
         self.initVert = vertice
         self.grafo = grafo
 
-    def getGrafoDFS(self):
+    def getPuntosDeArticulacion(self):
         """
         Devuelve un grafo dirigido resultado de hacer un DFS en el grafo recibido,
         a partir del vertice indicado.
