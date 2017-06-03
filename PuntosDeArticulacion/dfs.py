@@ -68,7 +68,7 @@ class DFS(object):
         visitados[int(vertice)] = True
         count += 1
         low[int(vertice)] = count
-        low[int(vertice)] = count
+        num[int(vertice)] = count
 
         for verticeVecino in self.grafo.obtener_conocidos(vertice):
 
@@ -77,7 +77,7 @@ class DFS(object):
                 padres[int(verticeVecino)] = vertice
                 self.getPuntosDeArticulacionRec(verticeVecino, visitados, padres, low, num, puntosDeArticulacion, count)
 
-                if( (low[int(verticeVecino)] >= num[int(vertice)] ) and (vertice not in puntosDeArticulacion)):    
+                if(padres[int(vertice)] != None) and (low[int(verticeVecino)] >= num[int(vertice)] ) and (vertice not in puntosDeArticulacion):    
                     puntosDeArticulacion.append(vertice)
                 low[int(vertice)] = min( low[int(vertice)], low[int(verticeVecino)] )
                 
