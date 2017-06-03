@@ -15,7 +15,15 @@ class Tarjan(object):
         #Creador de grafos dfs
         dfs = DFS(vertice, self.grafo) 
 
-        #se obtienen los puntos de articulacion del DFS
+        grafoDFS = dfs.getGrafoDFS()
+
+        #se obtienen los puntos de articulacion del DFS sin tener en cuenta la raiz
         puntosArticulacion = dfs.getPuntosDeArticulacion()
+
+        verticesVecinosDFS = grafoDFS.obtener_conocidos(vertice)
+        if ( (len(verticesVecinosDFS) >= 2)):
+            #Todo vertice que es la raiz del DFS con dos hijos o mas
+            #es punto de articulacion
+            puntosDeArticulacion.append(vertice)
 
         return puntosArticulacion
